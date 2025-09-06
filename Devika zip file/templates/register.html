@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Registration - Sports Team</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('../devi/devi/static/img/colorful.avif');
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #fbc300;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #f0f0f0;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #fbc300;
+    }
+
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      width: 600px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fbc300;
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      color: #fff;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #f8f9fa;
+      color: #000;
+      font-size: 16px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+      margin-right: 10px;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: green;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    @media screen and (max-width: 768px) {
+      .form-container {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">⚽ GamePlay</div>
+    <ul class="nav-links">
+      <li><a href="/home1">Home</a></li>
+      <li><a href="/teams">Teams</a></li>
+      <li><a href="/about">About Us</a></li>
+      <li><a href="/register">Registration</a></li>
+      <li><a href="/admin">Admin</a></li>
+      <li><a href="/Addplayer">Addplayer</a></li>
+      <li><a href="/Performance">Performance</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="form-container">
+    <h2>Student Registration</h2>
+    <form method="POST" action="/register">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+
+      <label for="student_id">Student ID:</label>
+      <input type="text" id="student_id" name="student_id" placeholder="Enter your Student ID" required />
+
+      <label>Gender:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="gender" value="Male" required /> Male</label>
+        <label><input type="radio" name="gender" value="Female" required /> Female</label>
+        
+      </div>
+
+      <label for="sport">Select Sport:</label>
+      <select id="sport" name="sport" required>
+        <option value="">--Choose Sport--</option>
+        <option value="Football">Football</option>
+        <option value="Basketball">Basketball</option>
+        <option value="Cricket">Cricket</option>
+        <option value="Volleyball">Volleyball</option>
+        <option value="Field Hockey">Football</option>
+        <!-- <option value="Volleyball">Volleyball</option>
+        <option value="Badminton">Badminton</option>
+        <option value="Baseball">Baseball</option>
+        <option value="Boxing">Boxing</option>
+        <option value="Swimming">Swimming</option>
+        <option value="Athletics">Athletics</option> -->
+      </select>
+
+      <label for="department">Department:</label>
+      <input type="text" id="department" name="department" placeholder="Enter your department" required />
+
+      <label for="contact">Contact Number:</label>
+      <input type="tel" id="contact" name="contact" placeholder="Enter your contact number" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <footer>
+    <center>
+      <p>© 2025 GamePlay. All Rights Reserved.</p>
+    </center>
+  </footer>
+</body>
+</html>

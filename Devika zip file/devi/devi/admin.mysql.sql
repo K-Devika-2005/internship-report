@@ -1,0 +1,10 @@
+CREATE DATABASE sports;
+
+USE sports;
+
+CREATE TABLE Admin (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  role VARCHAR(50),
+  sport VARCHAR(50)
+);

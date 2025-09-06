@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teams - GamePlay</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #283c86, #45a247);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+     .navbar {
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+     .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #f0f0f0;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #fbc300;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #fbc300;
+    }
+
+    
+    .team-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .team-card:hover {
+      transform: translateY(-10px);
+    }
+    .team-img {
+      height: 200px;
+      object-fit: cover;
+    }
+    .team-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body> 
+   <nav class="navbar">
+    <div class="logo">⚽ GamePlay</div>
+    <ul class="nav-links">
+      <li><a href="/home1">Home</a></li>
+      <li><a href="/teams">Teams</a></li>
+      <li><a href="/about">About Us</a></li>
+      <li><a href="/register">Registration</a></li>
+      <li><a href="/admin">Admin</a></li>
+      <li><a href="/Addplayer">Addplayer</a></li>
+       <li><a href="/Performance">Performance</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Meet Our Star Teams</h1>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="team-card p-3 text-center">
+          <img src="../devi/devi/static/img/logo1.jpeg" class="w-100 team-img" alt="Team 1">
+          <div class="team-name">The Warriors</div>
+          <p>Known for their fierce gameplay and unbeaten streak in regional tournaments.</p>
+          <p>"The Warriors" is a 1979 American action thriller film directed by Walter Hill. It follows a New York City street gang called The Warriors, who are falsely accused of murdering a prominent gang leader during a massive gang summit. With every gang in the city hunting them down, The Warriors must fight their way back to their home turf in Coney Island, surviving a night filled with danger and chaos.
+             The film is known for its gritty style, unique gang aesthetics, and the famous line:
+             “Warriors, come out to play!”
+
+             It's a cult classic that explores themes of loyalty, survival, and urban warfare.
+</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-card p-3 text-center">
+          <img src="../devi/devi/static/img/logo2.png" class="w-100 team-img" alt="Team 2">
+          <div class="team-name">Phoenix FC</div>
+          <p>A team that rises under pressure and delivers stunning finishes on the field.</p>
+          <p>Phoenix FC is a resilient and passionate football club known for rising from setbacks stronger than ever—much like the mythical phoenix. Built on teamwork, determination, and flair, the team thrives under pressure and never gives up, no matter the odds. With a fiery playing style and loyal fan base, Phoenix FC symbolizes rebirth, grit, and relentless pursuit of victory.
+Their red and gold colors represent fire and strength, burning with ambition in every match.
+Opponents know that no lead is safe when facing the firestorm of Phoenix FC.
+Every match is a battle, and Phoenix FC rises from the ashes stronger each time.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-card p-3 text-center">
+          <img src="../devi/devi/static/img/logo3.jpg" class="w-100 team-img" alt="Team 3">
+          <div class="team-name">Storm Chasers</div>
+          <p>Agile, fast, and strategic—Storm Chasers are a force in every league they enter.</p>
+          <p>Storm Chasers are a fearless, fast-paced team known for their explosive energy and aggressive gameplay. Just like chasing a storm, their matches are unpredictable and electrifying. The team charges into every game with intensity, leaving opponents struggling to keep up. They represent boldness, speed, and the thrill of living on the edge.
+Wearing lightning-themed kits, they strike fast and leave a mark on every field they touch.
+Fueled by adrenaline and unity, Storm Chasers are a force that never backs down.
+They don’t just play the game—they bring the storm with them.</p>
+          </div>
+      </div>
+  </div>
+    <center>
+    <footer>
+    <span>
+    <p><br><br><br><br>© 2025 GamePlay. All Rights Reserved.</p>
+    </span>
+    </footer>
+    </center>
+</body>
+</html>
+     
