@@ -9,43 +9,39 @@
     body {
       background-color: #f2f2f2;
       font-family: Arial, sans-serif;
+      background-image: url("{{ url_for('static', filename='img/image1.jpg') }}");
+      background-size: cover;
+      background-attachment: fixed;
     }
-
     .navbar {
       background-color: #007bff;
       padding: 1rem;
     }
-
     .navbar .logo {
       color: #fff;
       font-size: 24px;
       font-weight: bold;
     }
-
     .nav-links {
       list-style: none;
       display: flex;
       gap: 20px;
+      margin: 0;
     }
-
     .nav-links a {
       color: #fff;
       text-decoration: none;
     }
-
     .container {
       margin-top: 40px;
     }
-
     table {
       background-color: #fff;
     }
-
     th {
       background-color: #007bff;
       color: #fff;
     }
-
     footer {
       margin-top: 50px;
       background-color: #343a40;
@@ -54,83 +50,60 @@
     }
   </style>
 </head>
-<body style="background-image: url('../devi/devi/static/img/image1.jpg');">
+<body>
 
   <nav class="navbar d-flex justify-content-between align-items-center">
     <div class="logo">⚽ GamePlay Admin</div>
     <ul class="nav-links">
-      <li><a href="/index">Home</a></li>
-      <li><a href="/teams">Teams</a></li>
-      <li><a href="/about">About Us</a></li>
-      <li><a href="/register">Registration</a></li>
-      <li><a href="/admin">Admin</a></li>
-      <li><a href="/Addplayer">Addplayer</a></li>
-      <li><a href="/Performance">Performance</a></li>
-      <li><a href="/contact">Contact</a></li>
+      <li><a href="{{ url_for('index') }}">Home</a></li>
+      <li><a href="{{ url_for('teams') }}">Teams</a></li>
+      <li><a href="{{ url_for('about') }}">About Us</a></li>
+      <li><a href="{{ url_for('register') }}">Registration</a></li>
+      <li><a href="{{ url_for('admin') }}">Admin</a></li>
+      <li><a href="{{ url_for('addplayer') }}">Add Player</a></li>
+      <li><a href="{{ url_for('performance') }}">Performance</a></li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
   </nav>
 
   <div class="container">
-    <h2 class="mb-4"> Admin Students Registered </h2>
+    <h2 class="mb-4">Registered Students</h2>
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Reg. No</th>
+            <th>#</th>
             <th>Full Name</th>
             <th>Student ID</th>
             <th>Gender</th>
             <th>Sport</th>
             <th>Department</th>
-            <th>Contact</th>        
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Devi</td>
-            <td>12301</td>
-            <td>Female</td>
-            <td>Football</td>
-            <td>Computer Science</td>
-            <td>9876543210</td>
-          </tr>
-          <tr>
-            <td>02</td>
-            <td>Amizhthan</td>
-            <td>12302</td>
-            <td>Male</td>
-            <td>Basketball</td>
-            <td>Computer Science</td>
-            <td>9876543210</td>
-          </tr>
-          <tr>
-            <td>03</td>
-            <td>Saba</td>
-            <td>12303</td>
-            <td>Male</td>
-            <td>Cricket</td>
-            <td>B.A tamil</td>
-            <td>8012370450</td>
-          </tr>
-          <tr>
-            <td>04</td>
-            <td>Sargu</td>
-            <td>12304</td>
-            <td>Male</td>
-            <td>Volleyball</td>
-            <td>B.sc chemistry</td>
-            <td>9657806545</td>
-          </tr>
           {% for student in students %}
           <tr>
-            <td>{{ loop.index + 4 }}</td> <!-- Offset by 4 to continue numbering after hardcoded rows -->
+            <td>{{ loop.index }}</td>
             <td>{{ student.name }}</td>
             <td>{{ student.id }}</td>
             <td>{{ student.gender }}</td>
             <td>{{ student.sport }}</td>
             <td>{{ student.department }}</td>
             <td>{{ student.contact }}</td>
+            <td>{{ student.email }}</td>
+            <td>
+              <form action="{{ url_for('delete', student_id=student.id) }}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this record?');">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="text-center">No students registered yet.</td>
           </tr>
           {% endfor %}
         </tbody>

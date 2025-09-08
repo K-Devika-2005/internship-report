@@ -1,415 +1,233 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>STMS — Performance Tracking (HTML + CSS)</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  :root{
-    --bg: #0f1724;
-    --card: #0f1724;
-    --muted: #9aa4b2;
-    --accent: #60a5fa;
-    --glass: rgba(255,255,255,0.03);
-    --success: #34d399;
-    --warn: #f59e0b;
-    --danger: #fb7185;
-    --text: #ecf0f6;
-    --card-radius: 12px;
-    --pad: 18px;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
+  <meta charset="utf-8">
+  <title>Performance Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Reset */
+body, ul {
+  margin: 0;
+  padding: 0;
+}
 
-  /* Page layout */
-  body{
-    margin:0;
-    background: linear-gradient(180deg,#071028 0%, #0b1220 100%);
-    color:var(--text);
-    min-height:100vh;
-    padding:28px;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
-  header{
-    display:flex;
-    gap:18px;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:22px;
-  }
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+}
 
-  .title{
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
-  .brand{
-    background:linear-gradient(135deg,#60a5fa,#7c3aed);
-    width:48px;height:48px;border-radius:10px;
-    display:grid;place-items:center;font-weight:700;color:white;font-size:18px;box-shadow:0 6px 20px rgba(0,0,0,0.4);
-  }
-  h1{font-size:20px;margin:0}
-  p.lead{margin:0;color:var(--muted);font-size:13px}
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
 
-  /* Controls (search/filter) - not functional without JS but included for UI */
-  .controls{
-    display:flex;gap:10px;align-items:center;
-  }
-  .search{
-    background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;color:var(--text);
-    min-width:220px;
-  }
-  .btn{
-    background:linear-gradient(90deg,#60a5fa,#7c3aed);padding:9px 14px;border-radius:10px;border:none;color:white;font-weight:600;cursor:pointer;
-    box-shadow:0 8px 20px rgba(99,102,241,0.12);
-  }
+.navbar .nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
 
-  /* Grid layout */
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr 420px;
-    gap:20px;
-    align-items:start;
-  }
+.navbar .nav-links li a:hover {
+  color: #ffd700;
+  transform: translateY(-2px);
+}
 
-  /* Left column: table + header */
-  .panel{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:var(--card-radius);
-    padding:var(--pad);
-    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-    border: 1px solid rgba(255,255,255,0.02);
-  }
+/* Body */
+body {
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
 
-  /* Table */
-  table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:14px;
-    margin-top:12px;
-  }
-  thead th{
-    text-align:left;padding:10px 12px;color:var(--muted);font-weight:600;font-size:12px;
-    border-bottom:1px dashed rgba(255,255,255,0.03);
-  }
-  tbody td{
-    padding:12px;color:var(--text);vertical-align:middle;border-bottom:1px solid rgba(255,255,255,0.02);
-  }
+/* Container */
+.container {
+  margin-top: 50px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  animation: fadeIn 0.8s ease-in-out;
+}
 
-  .player-name{
-    display:flex;gap:12px;align-items:center;
-  }
-  .avatar{
-    width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-weight:700;background:linear-gradient(135deg,#111827,#1f2937);
-    color:#fff;font-size:15px;border:1px solid rgba(255,255,255,0.03);
-  }
-  .meta{display:flex;flex-direction:column}
-  .meta .role{color:var(--muted);font-size:12px}
+/* Heading */
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #007bff;
+}
 
-  /* Stat chips */
-  .chip{
-    display:inline-block;padding:6px 9px;border-radius:999px;font-weight:600;font-size:12px;background:rgba(255,255,255,0.02);
-    border:1px solid rgba(255,255,255,0.02);
-  }
+/* Table */
+table {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-  /* Energy meter (used in table and cards) */
-  .energy-wrap{width:160px;height:12px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
-  .energy-bar{
-    height:100%;
-    width:var(--energy, 50%);
-    transition:width 450ms ease;
-    background:linear-gradient(90deg,#34d399,#60a5fa);
-  }
+thead th {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  font-weight: 500;
+  text-align: center;
+}
 
-  /* energy color variants (for color hint) */
-  .energy-high .energy-bar{ background: linear-gradient(90deg,#34d399,#60a5fa); }
-  .energy-med  .energy-bar{ background: linear-gradient(90deg,#f59e0b,#f97316); }
-  .energy-low  .energy-bar{ background: linear-gradient(90deg,#fb7185,#ef4444); }
+tbody tr {
+  transition: background 0.2s ease;
+}
 
-  /* Right column: player cards */
-  .cards{
-    display:flex;flex-direction:column;gap:12px;
-  }
-  .player-card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-    padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);
-    display:flex;gap:12px;align-items:center;
-  }
-  .card-left{display:flex;flex-direction:column;gap:8px;flex:1}
-  .card-right{width:120px;text-align:center}
-  .stat-row{display:flex;gap:10px;align-items:center}
-  .stat{
-    flex:1;background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;font-size:13px;text-align:center;
-  }
+tbody tr:hover {
+  background: #f1f7ff;
+}
 
-  /* small helper */
-  .small{font-size:12px;color:var(--muted)}
-  .big{font-size:18px;font-weight:700}
+/* Progress bars */
+.progress {
+  height: 22px;
+  border-radius: 12px;
+  background: #e9ecef;
+}
 
-  /* Responsive */
-  @media (max-width:980px){
-    .grid{grid-template-columns:1fr}
-    .controls .search{min-width:160px}
-  }
+.progress-bar {
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: width 0.6s ease;
+}
 
-  /* Table footer summary */
-  .summary{
-    display:flex;gap:12px;align-items:center;margin-top:12px;
-  }
-  .summary .stat{padding:12px}
+.progress-high {
+  background: linear-gradient(90deg, #28a745, #00c853); /* green */
+}
 
-  /* hint */
-  .hint{margin-top:12px;color:var(--muted);font-size:13px}
-</style>
+.progress-medium {
+  background: linear-gradient(90deg, #ff9800, #ffb74d); /* orange */
+}
+
+.progress-low {
+  background: linear-gradient(90deg, #dc3545, #f44336); /* red */
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.energy-note {
+  border: 2px solid #4CAF50;   /* Green border */
+  background-color: #f9fff9;   /* Light green background */
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #333;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: 20px 0;
+}
+.energy-note h4 {
+  margin-top: 0;
+  color: #2e7d32;
+}
+.energy-note code {
+  background-color: #e0f2f1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.energy-note ul {
+  padding-left: 20px;
+}
+
+  </style>
 </head>
 <body>
-    <nav class="navbar">
+  <nav class="navbar">
     <div class="logo">⚽ GamePlay</div>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
       <li><a href="/teams">Teams</a></li>
       <li><a href="/about">About Us</a></li>
       <li><a href="/register">Registration</a></li>
-      <li><a href="/admin">Admin</a></li>
+      <li><a href="/login">Admin</a></li>
       <li><a href="/Addplayer">Addplayer</a></li>
-      <li><a href="/Performance">Performance</a></li>
+       <li><a href="/Performance">Performance</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
   </nav>
+  <div class="container">
+    <h2>⚡ Players Performance</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle text-center">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Team</th>
+            <th>Position</th>
+            <th>Matches</th>
+            <th>Goals</th>
+            <th>Assists</th>
+            <th>Energy</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in players %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.team }}</td>
+            <td>{{ p.position }}</td>
+            <td>{{ p.matches }}</td>
+            <td>{{ p.goals }}</td>
+            <td>{{ p.assists }}</td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar 
+     {% if p.energy >= 70 %}progress-high{% elif p.energy >= 40 %}progress-medium{% else %}progress-low{% endif %}"
+     role="progressbar"
+     style="width: {{ p.energy|default(0)|int }}%">
+  {{ p.energy|default(0)|int }}%
+</div>
 
-<header>
-  <div class="title">
-    <div class="brand">ST</div>
-    <div>
-      <h1>Performance Tracking</h1>
-      <p class="lead">Player stats and energy levels — update values in the HTML (no JS required).</p>
+
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="8" class="text-center text-muted">No players added yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div class="controls">
-    <input class="search" placeholder="Search player (UI only)" />
-    <button class="btn">Add Player</button>
-  </div>
-</header>
-
-<main class="grid">
-  <!-- LEFT: Table of players -->
-  <section class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <h2 style="margin:0;font-size:16px">Players & Stats</h2>
-        <div class="small">Quick overview of matches, goals, assists and energy</div>
-      </div>
-      <div style="text-align:right">
-        <div class="small">Team: Tigers</div>
-        <div class="small">Season: 2025</div>
-      </div>
-    </div>
-
-    <table aria-label="Player performance table">
-      <thead>
-        <tr>
-          <th>Player</th>
-          <th>Matches</th>
-          <th>Goals</th>
-          <th>Assists</th>
-          <th>Energy</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Player row example -->
-        <tr>
-          <td>
-            <div class="player-name">
-              <div class="avatar">AR</div>
-              <div class="meta">
-                <div style="font-weight:700">A. Ramesh</div>
-                <div class="role small">Forward • Age 24</div>
-              </div>
-            </div>
-          </td>
-          <td>12</td>
-          <td>8</td>
-          <td>5</td>
-          <td>
-            <!-- Set energy using CSS custom property on the row or container -->
-            <div class="energy-wrap energy-high" style="--energy:85%;">
-              <div class="energy-bar" title="85%"></div>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <div class="player-name">
-              <div class="avatar">KS</div>
-              <div class="meta">
-                <div style="font-weight:700">K. Suresh</div>
-                <div class="role small">Midfielder • Age 27</div>
-              </div>
-            </div>
-          </td>
-          <td>15</td>
-          <td>3</td>
-          <td>7</td>
-          <td>
-            <div class="energy-wrap energy-med" style="--energy:57%;">
-              <div class="energy-bar" title="57%"></div>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <div class="player-name">
-              <div class="avatar">MP</div>
-              <div class="meta">
-                <div style="font-weight:700">M. Priya</div>
-                <div class="role small">Defender • Age 22</div>
-              </div>
-            </div>
-          </td>
-          <td>14</td>
-          <td>1</td>
-          <td>2</td>
-          <td>
-            <div class="energy-wrap energy-low" style="--energy:28%;">
-              <div class="energy-bar" title="28%"></div>
-            </div>
-          </td>
-        </tr>
-
-        <!-- Add more rows as needed; change --energy to adjust meters -->
-      </tbody>
-    </table>
-
-    <div class="summary">
-      <div class="stat">
-        <div class="small">Avg Energy</div>
-        <div class="big">57%</div>
-      </div>
-      <div class="stat">
-        <div class="small">Total Matches</div>
-        <div class="big">41</div>
-      </div>
-      <div class="stat">
-        <div class="small">Total Goals</div>
-        <div class="big">12</div>
-      </div>
-    </div>
-
-    <div class="hint">Tip: To change a player's energy, edit the element with <code>style="--energy:75%"</code>. Use the classes <code>energy-high</code>, <code>energy-med</code>, or <code>energy-low</code> to adjust the color scale.</div>
-  </section>
-
-  <!-- RIGHT: Player cards (detailed view per player) -->
-  <aside class="cards">
-    <!-- Card: Player 1 -->
-    <div class="player-card" style="--energy:85%">
-      <div class="card-left">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div class="avatar" style="width:60px;height:60px;border-radius:10px;font-size:18px">AR</div>
-          <div>
-            <div style="font-weight:800;font-size:15px">A. Ramesh</div>
-            <div class="small">Forward • Jersey #9</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:10px;margin-top:10px">
-          <div class="stat-row" style="gap:8px;flex:1">
-            <div class="stat"><div class="small">Matches</div><div style="font-weight:700">12</div></div>
-            <div class="stat"><div class="small">Goals</div><div style="font-weight:700">8</div></div>
-            <div class="stat"><div class="small">Assists</div><div style="font-weight:700">5</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-right">
-        <div class="small">Energy</div>
-        <div style="margin:8px 0">
-          <div class="energy-wrap energy-high" style="--energy:85%;">
-            <div class="energy-bar" title="85%"></div>
-          </div>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">Last updated: 02 Sep 2025</div>
-      </div>
-    </div>
-
-    <!-- Card: Player 2 -->
-    <div class="player-card" style="--energy:57%">
-      <div class="card-left">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div class="avatar" style="width:60px;height:60px;border-radius:10px;font-size:18px">KS</div>
-          <div>
-            <div style="font-weight:800;font-size:15px">K. Suresh</div>
-            <div class="small">Midfielder • Jersey #6</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:10px;margin-top:10px">
-          <div class="stat-row" style="gap:8px;flex:1">
-            <div class="stat"><div class="small">Matches</div><div style="font-weight:700">15</div></div>
-            <div class="stat"><div class="small">Goals</div><div style="font-weight:700">3</div></div>
-            <div class="stat"><div class="small">Assists</div><div style="font-weight:700">7</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-right">
-        <div class="small">Energy</div>
-        <div style="margin:8px 0">
-          <div class="energy-wrap energy-med" style="--energy:57%;">
-            <div class="energy-bar" title="57%"></div>
-          </div>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">Last updated: 01 Sep 2025</div>
-      </div>
-    </div>
-
-    <!-- Card: Player 3 -->
-    <div class="player-card" style="--energy:28%">
-      <div class="card-left">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div class="avatar" style="width:60px;height:60px;border-radius:10px;font-size:18px">MP</div>
-          <div>
-            <div style="font-weight:800;font-size:15px">M. Priya</div>
-            <div class="small">Defender • Jersey #3</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:10px;margin-top:10px">
-          <div class="stat-row" style="gap:8px;flex:1">
-            <div class="stat"><div class="small">Matches</div><div style="font-weight:700">14</div></div>
-            <div class="stat"><div class="small">Goals</div><div style="font-weight:700">1</div></div>
-            <div class="stat"><div class="small">Assists</div><div style="font-weight:700">2</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-right">
-        <div class="small">Energy</div>
-        <div style="margin:8px 0">
-          <div class="energy-wrap energy-low" style="--energy:28%;">
-            <div class="energy-bar" title="28%"></div>
-          </div>
-        </div>
-        <div style="font-size:13px;color:var(--muted)">Last updated: 03 Sep 2025</div>
-      </div>
-    </div>
-
-  </aside>
-</main>
-
-<!-- Note about editing -->
-<section style="max-width:980px;margin:22px auto;color:var(--muted);font-size:13px">
-  <strong>How to update energy values (HTML-only):</strong>
+<div class="energy-note">
+  <h4>Note on Energy Calculation</h4>
+  <p>Each player starts with <b>100%</b> energy.</p>
+  <p><b>Formula:</b> <code>Energy = 100 - (Matches × 2) + (Goals × 1) + (Assists × 0.5)</code></p>
+  
   <ul>
-    <li>Edit the player's container and set the inline style variable, e.g. <code>style="--energy:72%;"</code>. The meter width uses that value.</li>
-    <li>For color hint, add one of these classes to the same element: <code>energy-high</code>, <code>energy-med</code>, or <code>energy-low</code>.</li>
-    <li>This is a static UI. If you want live editing, sorting, or persistence, I can add JavaScript & backend next.</li>
+    <li>Matches reduce energy due to fatigue (−2% per match).</li>
+    <li>Goals boost energy from performance (+1% per goal).</li>
+    <li>Assists give a smaller boost for teamwork (+0.5% per assist).</li>
   </ul>
-</section>
+  
+  <p>The final energy is always kept between <b>0%</b> and <b>100%</b>.</p>
 
+  <p><u>Example:</u><br>
+  Matches = 10, Goals = 5, Assists = 4 →  
+  Energy = 100 − (10×2) + (5×1) + (4×0.5) = <b>87%</b>.</p>
+</div>
 </body>
 </html>
